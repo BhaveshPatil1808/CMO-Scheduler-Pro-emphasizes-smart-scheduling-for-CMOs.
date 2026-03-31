@@ -39,41 +39,42 @@ It streamlines scheduling, approvals, and daily routine tracking with secure aut
 
 ## 🚀 Getting Started
 
-1️⃣ **Clone the repository**
-```bash
+**1️⃣ Clone the repository**
+
 git clone https://github.com/BhaveshPatil1808/CMO-DailyFlow.git
 cd CMO-DailyFlow
 
-
-2️⃣ Configure Database  
+---
+**2️⃣ Configure Database**  
 Update application.properties with your DB credentials:
 spring.datasource.url=jdbc:mysql://localhost:3306/cmo_routine
 spring.datasource.username=root
 spring.datasource.password=yourpassword
 spring.jpa.hibernate.ddl-auto=update
 
-3️⃣ Build the project
+
+**3️⃣ Build the project**
 mvn clean install
 
-4️⃣ Run the application
+**4️⃣ Run the application**
 mvn spring-boot:run
 
-💬 Usage (Role-Based Dashboards)
-👤 User Dashboard
+**💬 Usage (Role-Based Dashboards)**
+**👤 User Dashboard**
 Register/Login
 
 Request meetings with CMs
 
 View my meetings
 
-🧑‍💼 CM Dashboard
+**🧑‍💼 CM Dashboard**
 View assigned meetings
 
 Approve/Reject/Delete meetings
 
 View today’s meetings
 
-👨‍💻 Admin Dashboard
+**👨‍💻 Admin Dashboard**
 View all users
 
 View all CMs
@@ -83,7 +84,7 @@ View all meetings
 View today’s meetings
 
 
-📂 Project Structure
+**📂 Project Structure**
 CMO-DailyFlow/
  ├── com.Bhavesh.main/
  │    ├── CmDailyRoutineManagementApplication.java   # Spring Boot entry point
@@ -99,7 +100,7 @@ CMO-DailyFlow/
       └── application.properties                    # DB config
 
 
-🗄 Database Schema (Simplified)
+**🗄 Database Schema (Simplified)**
 users
 
 id, name, email, password, role, photoUrl
@@ -108,7 +109,7 @@ meetings
 
 id, title, description, date, startTime, endTime, priority, status, user_id, cm_id
 
-🚀 Future Improvements
+**🚀 Future Improvements**
 🌐 Add REST APIs for mobile/web integration
 
 🔐 Enhance security with JWT authentication
@@ -119,5 +120,5 @@ id, title, description, date, startTime, endTime, priority, status, user_id, cm_
 
 📅 Calendar integration (Google/Outlook)
 
-👨‍💻 Author
-Bhavesh Patil
+**👨‍💻 Author**
+**Bhavesh Patil**
