@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CM Dashboard | Executive Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sidebar-color: #1e293b;
+            --accent-blue: #3b82f6;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: #1e293b;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+
+        /* Profile Card */
+        .profile-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center the profile image and text */
+        }
+
+        .profile-photo {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        .role-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Table Styling */
+        .custom-card {
+            background: white;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .card-header-title {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+        }
+
+        .table thead th {
+            background-color: #f8fafc;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            border-top: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            vertical-align: middle;
+            color: #334155;
+            font-size: 0.9rem;
+        }
+
+        /* Status & Buttons */
+        .btn-action {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-approve { background-color: #22c55e; color: white; }
+        .btn-approve:hover { background-color: #16a34a; transform: translateY(-1px); }
+
+        .btn-reject { background-color: #ef4444; color: white; }
+        .btn-reject:hover { background-color: #dc2626; transform: translateY(-1px); }
+
+        .btn-delete { background-color: #0f172a; color: white; }
+        .btn-delete:hover { background-color: #000000; transform: translateY(-1px); }
+
+        hr { opacity: 0.1; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header d-flex justify-content-between align-items-center">
+    <h2 class="mb-0 fw-bold text-primary"><i class="fas fa-shield-halved me-2"></i> CM Dashboard</h2>
+    <div class="d-flex align-items-center">
+        <span class="me-3 text-muted" th:text="${user.role}">Role</span>
+        <img th:src="${user.photoUrl}" alt="Profile" width="40" height="40" class="rounded-circle border border-primary">
+    </div>
+</div>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="profile-section mb-4">
+                <h5 class="text-white-50 small text-uppercase mb-4 text-start">Executive Profile</h5>
+                
+                <img th:src="${user.photoUrl}" 
+                     alt="Profile Photo" 
+                     width="120" height="120" 
+                     class="rounded-circle profile-photo">
+
+                <h3 class="fw-bold mb-1 text-white" th:text="${user.name}">User Name</h3>
+                <p class="mb-3 text-white-50" th:text="${user.email}">email@domain.com</p>
+                <span class="role-badge" th:text="${user.role}">Role</span>
+                
+                <div class="mt-4 pt-4 border-top border-secondary">
+                    <div class="row text-center">
+                        <div class="col">
+                            <h4 class="fw-bold mb-0 text-white" th:text="${#lists.size(todayMeetings)}">0</h4>
+                            <small class="text-white-50">Today</small>
+                        </div>
+                        <div class="col border-start border-secondary">
+                            <h4 class="fw-bold mb-0 text-white" th:text="${#lists.size(meetings)}">0</h4>
+                            <small class="text-white-50">Total</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="custom-card">
+                <div class="card-header-title">
+                    <i class="fas fa-calendar-day text-primary me-2"></i> Today's Schedule
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="m : ${todayMeetings}">
+                                <td class="fw-semibold" th:text="${m.title}">Title</td>
+                                <td th:text="${m.startTime}">09:00</td>
+                                <td th:text="${m.endTime}">10:00</td>
+                                <td>
+                                    <span class="badge rounded-pill bg-info text-dark" th:text="${m.status}">Status</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="custom-card shadow-sm">
+                <div class="card-header-title justify-content-between">
+                    <span><i class="fas fa-list-ul text-primary me-2"></i> All Registered Meetings</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Title & Description</th>
+                                <th>Date</th>
+                                <th>Timing</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="m : ${meetings}">
+                                <td>
+                                    <div class="fw-bold" th:text="${m.title}">Meeting Title</div>
+                                    <small class="text-muted" th:text="${m.description}">Description text goes here...</small>
+                                </td>
+                                <td th:text="${m.date}">2024-05-20</td>
+                                <td>
+                                    <span class="text-primary fw-600" th:text="${m.startTime}">Start</span> 
+                                    <i class="fas fa-arrow-right mx-1 small text-muted"></i> 
+                                    <span class="text-primary fw-600" th:text="${m.endTime}">End</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border" th:text="${m.priority}">Priority</span>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill bg-secondary" th:text="${m.status}">Status</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <div th:if="${m.status.name() == 'PENDING'}" class="d-flex gap-2">
+                                            <a th:href="@{/meetings/approve/{id}(id=${m.id})}">
+                                                <button class="btn-action btn-approve"><i class="fas fa-check me-1"></i> Approve</button>
+                                            </a>
+                                            <a th:href="@{/meetings/reject/{id}(id=${m.id})}">
+                                                <button class="btn-action btn-reject"><i class="fas fa-times me-1"></i> Reject</button>
+                                            </a>
+                                        </div>
+
+                                        <a th:href="@{/meetings/delete/{id}(id=${m.id})}"
+                                           onclick="return confirm('Are you sure you want to delete this meeting?');">
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash-can me-1"></i> Delete</button>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
