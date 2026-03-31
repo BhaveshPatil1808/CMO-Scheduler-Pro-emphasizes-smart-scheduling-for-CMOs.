@@ -5,6 +5,7 @@
 [![Spring Security](https://img.shields.io/badge/Security-Spring%20Security-red?logo=springsecurity)](https://spring.io/projects/spring-security)
 [![Database](https://img.shields.io/badge/Database-MySQL-lightblue?logo=mysql)](https://www.mysql.com/)
 [![Maven](https://img.shields.io/badge/Build-Maven-orange?logo=apachemaven)](https://maven.apache.org/)
+
 **CMO DailyFlow** is a role‑based **Daily Routine & Meeting Management System** designed specifically for **CMOs (Chief Marketing Officers)**.  
 It streamlines scheduling, approvals, and daily routine tracking with secure authentication and dashboards for Admins, CMs, and Users.
 
@@ -54,9 +55,11 @@ spring.jpa.hibernate.ddl-auto=update
 
 
 **3️⃣ Build the project**
+
 mvn clean install
 
 **4️⃣ Run the application**
+
 mvn spring-boot:run
 
 **💬 Usage (Role-Based Dashboards)**
@@ -85,6 +88,7 @@ View today’s meetings
 
 
 **📂 Project Structure**
+```
 CMO-DailyFlow/
  ├── com.Bhavesh.main/
  │    ├── CmDailyRoutineManagementApplication.java   # Spring Boot entry point
@@ -98,7 +102,7 @@ CMO-DailyFlow/
       ├── templates/                                # Thymeleaf UI (admin-dashboard, cm-dashboard, user-dashboard, login, register, meetings, meeting-form)
       ├── static/                                   # CSS, JS, images
       └── application.properties                    # DB config
-
+```
 
 **🗄 Database Schema (Simplified)**
 users
